@@ -102,18 +102,37 @@ def test_plan_rescue_finds_identical_and_new_observations(tmp_path: Path) -> Non
     insert_observation(
         source,
         SOURCE_TABLE,
-        "mngl_000002",
+        "emi_000001",
         "00000000-0000-4000-8000-000000000002",
     )
-    write_photos(tmp_path, "mngl_000002")
+    write_photos(tmp_path, "emi_000001")
 
     plan = rescue.plan_rescue(source, target, tmp_path)
 
     assert plan.conflicts == ()
     assert plan.common_ids == ("mngl_000001",)
-    assert plan.new_ids == ("mngl_000002",)
+    assert plan.new_ids == ("emi_000001",)
     assert len(plan.attachments) == 5
     assert {item.media_type for item in plan.attachments} == {"image/jpeg"}
+
+
+@pytest.mark.parametrize(
+    ("sample_id", "valid"),
+    [
+        ("mngl_000001", True),
+        ("emi_000001", True),
+        ("emi_1", False),
+        ("emi_00000a", False),
+        ("emi_0000000", False),
+        ("emi_000001 ", False),
+        ("mcdn_000001", False),
+    ],
+)
+def test_validate_identity_accepts_only_supported_prefixes(sample_id: str, valid: bool) -> None:
+    errors = rescue.validate_identity(
+        sample_id, {"uuid_qfield": "00000000-0000-4000-8000-000000000001"}
+    )
+    assert (errors == []) is valid
 
 
 def test_plan_rescue_rejects_different_existing_record(tmp_path: Path) -> None:

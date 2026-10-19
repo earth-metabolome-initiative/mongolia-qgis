@@ -2,8 +2,9 @@
 
 Read `TEMPLATE_NOTES.md` before deriving another mission template.
 
-- Preserve `mngl_######` and `DCIM/mongolia/` across the QGIS project,
-  database constraints, scripts, and tests.
+- Preserve both `mngl_######` and `emi_######` sample IDs and
+  `DCIM/mongolia/` attachment paths across the QGIS project, database
+  constraints, scripts, and tests.
 - This repository starts with an empty observation store; once fieldwork
   begins, preserve all subsequent observations and attachments.
 - Do not add field imagery, QFieldSync state, backups, or generated TIFF/MBTiles.

@@ -63,12 +63,15 @@ def test_mongolia_species_lookup_is_populated_from_country_observations() -> Non
         ).fetchone()[0] > 0
 
 
-def test_database_enforces_mongolia_sample_identity(tmp_path: Path) -> None:
+@pytest.mark.parametrize("reharden", [False, True])
+def test_database_enforces_mongolia_sample_identity(tmp_path: Path, reharden: bool) -> None:
     # Isolation: SQLite's backup API keeps all indexes and constraints intact.
     database = sqlite3.connect(ROOT / "qgis/mongolia/observations.gpkg")
     replica = sqlite3.connect(tmp_path / "observations.gpkg")
     try:
         database.backup(replica)
+        if reharden:
+            replica.executescript((ROOT / "scripts/harden_observations.sql").read_text())
     finally:
         database.close()
     try:
@@ -78,21 +81,45 @@ def test_database_enforces_mongolia_sample_identity(tmp_path: Path) -> None:
         replica.create_function("ST_IsEmpty", 1, lambda _geometry: 1)
         uuid1 = "00000000-0000-4000-8000-000000000001"
         uuid2 = "00000000-0000-4000-8000-000000000002"
+        uuid3 = "00000000-0000-4000-8000-000000000003"
         replica.execute(
             "INSERT INTO observations(sample_id, uuid_qfield) VALUES (?, ?)",
             ("mngl_000001", uuid1),
         )
+        replica.execute(
+            "INSERT INTO observations(sample_id, uuid_qfield) VALUES (?, ?)",
+            ("emi_000001", uuid2),
+        )
         for sample_id, uuid in (
-            ("mcdn_000001", uuid2),
-            ("mngl_1", uuid2),
-            ("mngl_000001", uuid2),
+            ("mcdn_000001", uuid3),
+            ("mngl_1", uuid3),
+            ("emi_1", uuid3),
+            ("emi_0000000", uuid3),
+            ("emi_00000a", uuid3),
+            ("emi_000001 ", uuid3),
+            ("mngl_000001", uuid3),
+            ("emi_000001", uuid3),
             ("mngl_000002", uuid1),
+            ("emi_000002", uuid1),
         ):
             with pytest.raises(sqlite3.IntegrityError):
                 replica.execute(
                     "INSERT INTO observations(sample_id, uuid_qfield) VALUES (?, ?)",
                     (sample_id, uuid),
                 )
+        with pytest.raises(sqlite3.IntegrityError):
+            replica.execute(
+                "UPDATE observations SET sample_id = ? WHERE sample_id = ?",
+                ("emi_00000a", "mngl_000001"),
+            )
+        replica.execute(
+            "UPDATE observations SET sample_id = ? WHERE sample_id = ?",
+            ("emi_000002", "mngl_000001"),
+        )
+        replica.execute(
+            "UPDATE observations SET sample_id = ? WHERE sample_id = ?",
+            ("mngl_000001", "emi_000002"),
+        )
     finally:
         replica.close()
 

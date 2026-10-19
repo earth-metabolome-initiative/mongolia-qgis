@@ -123,10 +123,12 @@ devices sync. A different attachment source may be passed with
 1. Open `qgis/mongolia/mongolia.qgs`; confirm no broken vector layers and that
    the country outline and extent cover Mongolia.
 2. Populate and review collector and Mongolia species relations before fieldwork.
-3. Create a test observation with `mngl_######`, UUID, and all six
-   `DCIM/mongolia/` attachment paths; check relation forms and optional ORCID.
+3. Create test observations with both `mngl_######` and `emi_######`,
+   distinct UUIDs, and all six `DCIM/mongolia/<sample_id>_NN.jpg` attachment
+   paths for each; check relation forms and optional ORCID.
 4. Run `uv run ruff check .` and `uv run pytest`.
-5. Package/download to a QField test device; in airplane mode verify the
+5. Repackage from the updated GeoPackage, not earlier `.qfieldsync/` snapshots;
+   download afresh to a QField test device. In airplane mode verify the
    offline z8 layer is visible; inspect zoomed-out and field-scale limits.
 6. Audit attachment inventory and independent archive before retiring media.
 7. Check repository size: no field photos, device exports, generated TIFFs,

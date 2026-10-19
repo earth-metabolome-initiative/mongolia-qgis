@@ -25,7 +25,7 @@ PICTURE_FIELDS = (
 )
 REQUIRED_PICTURE_FIELDS = PICTURE_FIELDS[:5]
 IDENTITY_FIELDS = ("sample_id", "uuid_qfield")
-SAMPLE_ID_PATTERN = re.compile(r"mngl_[0-9]{6}")
+SAMPLE_ID_PATTERN = re.compile(r"(?:mngl_|emi_)[0-9]{6}")
 UUID_PATTERN = re.compile(
     r"[0-9a-fA-F]{8}(?:-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}"
 )

@@ -3,18 +3,23 @@
 This repository is a clean Mongolia derivation of the
 [Macedonia QGIS project](https://github.com/earth-metabolome-initiative/macedonia-qgis).
 Macedonia's observation store contains active mission data and was **not**
-copied as data: the Mongolia GeoPackage has the same schema, constraints and
-form contract but starts with zero observations. The Macedonia collector
-roster, duplicate-label investigation, photos, backup exports, field-site
-coordinates and regional species lookup are not Mongolia data and were not
-transferred.
+copied as data: the Mongolia GeoPackage retains the observation columns and
+collection workflow, with identity constraints and QGIS form expressions
+adapted for both prefixes, and starts with zero observations. The Macedonia
+collector roster, duplicate-label investigation, photos, backup exports,
+field-site coordinates and regional species lookup were not transferred.
 
 ## Reusable collection behavior
 
-- Sample IDs match `mngl_######`; GeoPackage uniqueness/validation triggers
-  enforce this and UUID uniqueness alongside QGIS form constraints. Reapply
-  `scripts/harden_observations.sql` if the database is rebuilt. Old QField
-  offline schemas/deltas must not be merged blindly after a schema change.
+- Sample IDs match `mngl_######` or `emi_######`; GeoPackage
+  uniqueness/validation triggers enforce both formats and UUID uniqueness
+  alongside QGIS form constraints. The merge/rescue script accepts both.
+  Reapply `scripts/harden_observations.sql` if the database is rebuilt; apply
+  it to existing observation stores before collecting `emi_` IDs without
+  deleting rows. Generated `.qfieldsync/backup/` and `.qfieldsync/upload/`
+  snapshots may still carry old triggers; do not deploy them. Repackage from
+  the updated GeoPackage and redeploy/re-download the project before
+  collecting `emi_` IDs. Do not merge old QField offline deltas blindly.
 - The ID tab stays visible; duplication resets sample ID, UUID, attachment
   paths, coordinates and date to defaults. QGIS assigns
   `uuid('WithoutBraces')` when collecting.
