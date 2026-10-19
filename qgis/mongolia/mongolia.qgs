@@ -1,5 +1,5 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis projectname="mongolia" saveUserFull="pma" saveDateTime="2026-10-19T14:14:34" version="3.44.15-Solothurn" saveUser="pma">
+<qgis projectname="mongolia" saveUserFull="pma" saveDateTime="2026-10-19T15:09:34" version="3.44.15-Solothurn" saveUser="pma">
   <homePath path=""/>
   <title>mongolia</title>
   <transaction mode="Disabled"/>
@@ -670,7 +670,9 @@
           <Option value="30" type="int" name="QFieldSync/tracking_time_requirement_interval_seconds"/>
           <Option value="0" type="int" name="QFieldSync/value_map_button_interface_threshold"/>
           <Option type="List" name="dualview/previewExpressions">
+            <Option value="COALESCE( &quot;fullname&quot;, '&lt;NULL>' )" type="QString"/>
             <Option value="fullname" type="QString"/>
+            <Option type="invalid"/>
           </Option>
           <Option value="0" type="int" name="embeddedWidgets/count"/>
           <Option type="invalid" name="variableNames"/>
@@ -860,7 +862,7 @@ def my_form_open(dialog, layer, feature):
       </reuseLastValue>
       <dataDefinedFieldProperties/>
       <widgets/>
-      <previewExpression>fullname</previewExpression>
+      <previewExpression>COALESCE( "fullname", '&lt;NULL>' )</previewExpression>
       <mapTip enabled="1"></mapTip>
     </maplayer>
     <maplayer type="vector" maxScale="0" styleCategories="AllStyleCategories" readOnly="0" simplifyMaxScale="1" simplifyDrawingTol="1" wkbType="Point" geometry="Point" simplifyDrawingHints="0" autoRefreshTime="0" hasScaleBasedVisibilityFlag="0" autoRefreshMode="Disabled" refreshOnNotifyMessage="" labelsEnabled="1" simplifyAlgorithm="0" refreshOnNotifyEnabled="0" simplifyLocal="1" symbologyReferenceScale="-1" legendPlaceholderImage="" minScale="100000000">

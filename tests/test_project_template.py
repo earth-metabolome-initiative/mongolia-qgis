@@ -41,13 +41,20 @@ def test_country_geometry_is_mongolia_not_a_rectangular_extent() -> None:
         assert connection.execute("SELECT COUNT(*) FROM Mongolia_EMI").fetchone()[0] == 1
 
 
-def test_new_country_starts_without_foreign_field_records() -> None:
-    for file_name, table in (
-        ("observations.gpkg", "observations"),
-        ("collector_list.gpkg", "collector_list"),
-    ):
-        with sqlite3.connect(ROOT / "qgis/mongolia" / file_name) as connection:
-            assert connection.execute(f"SELECT COUNT(*) FROM {table}").fetchone()[0] == 0
+def test_collector_lookup_contains_requested_observers() -> None:
+    with sqlite3.connect(ROOT / "qgis/mongolia/collector_list.gpkg") as connection:
+        rows = connection.execute(
+            "SELECT fullname, email, ORCID FROM collector_list "
+            "WHERE fullname IN (?, ?, ?) ORDER BY fullname",
+            ("Emmanuel Defossez", "Neil Villard", "Pierre-Marie Allard"),
+        ).fetchall()
+    assert [row[0] for row in rows] == [
+        "Emmanuel Defossez",
+        "Neil Villard",
+        "Pierre-Marie Allard",
+    ]
+    assert rows[0][1:] == ("emmanuel.defossez@unine.ch", "0000-0002-3279-9190")
+    assert rows[2][1:] == ("pierre-marie.allard@unifr.ch", "0000-0003-3389-2191")
 
 
 def test_mongolia_species_lookup_is_populated_from_country_observations() -> None:

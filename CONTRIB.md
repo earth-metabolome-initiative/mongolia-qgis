@@ -39,8 +39,11 @@ ChecklistBank dataset `315834` (DOI `10.48580/dgykv`); inspect
 `col_match_type=unresolved` rows before deployment. Do not accept a genus-level
 match as a species resolution. Regenerating the list requires internet access;
 Mongolia's complete country-scale list may be substantially larger than a
-single field site. Collector names/contact information must be provided and
-loaded into the CSV and GeoPackage before collecting.
+single field site. The collector CSV and GeoPackage contain Emmanuel Defossez
+and Pierre-Marie Allard (details from the
+[Macedonia collector CSV](https://github.com/earth-metabolome-initiative/macedonia-qgis/blob/main/qgis/macedonia/collector_list.csv)),
+plus Neil Villard (name supplied for this project; other fields unknown).
+Keep both lookup files in sync when adding or correcting observers.
 
 ## Offline background
 
@@ -122,7 +125,8 @@ devices sync. A different attachment source may be passed with
 
 1. Open `qgis/mongolia/mongolia.qgs`; confirm no broken vector layers and that
    the country outline and extent cover Mongolia.
-2. Populate and review collector and Mongolia species relations before fieldwork.
+2. Review the three collector lookup entries, complete any missing details
+   when supplied, and verify the Mongolia species relation before fieldwork.
 3. Create test observations with both `mngl_######` and `emi_######`,
    distinct UUIDs, and all six `DCIM/mongolia/<sample_id>_NN.jpg` attachment
    paths for each; check relation forms and optional ORCID.

@@ -6,8 +6,10 @@ Macedonia's observation store contains active mission data and was **not**
 copied as data: the Mongolia GeoPackage retains the observation columns and
 collection workflow, with identity constraints and QGIS form expressions
 adapted for both prefixes, and starts with zero observations. The Macedonia
-collector roster, duplicate-label investigation, photos, backup exports,
-field-site coordinates and regional species lookup were not transferred.
+collector roster was not transferred wholesale; two named observers were
+subsequently selected from it. Duplicate-label investigations, photos, backup
+exports, field-site coordinates and regional species lookup were not
+transferred.
 
 ## Reusable collection behavior
 
@@ -27,10 +29,13 @@ field-site coordinates and regional species lookup were not transferred.
   `_06.jpg`; the first five are required. ORCID and iNaturalist username are
   optional. Changing picture columns requires redeploying/re-downloading the
   project before collecting or syncing offline changes.
-- Collector CSV/GeoPackage stays empty until a genuine mission roster is
-  provided. The Mongolia taxon source was fetched using the country place
-  and its CoL-resolved lookup was built; the QGIS relation fetch limit is off
-  so all 7,431 choices remain available, not just the first 1,000.
+- Collector CSV/GeoPackage contain Emmanuel Defossez and Pierre-Marie Allard
+  with details from the Macedonia collector CSV; Neil Villard was supplied
+  for Mongolia by name only (no verified email, affiliation, ORCID or
+  iNaturalist username). Keep CSV and GeoPackage in sync as the roster changes.
+- The Mongolia taxon source was fetched using the country place and its
+  CoL-resolved lookup was built; the QGIS relation fetch limit is off so all
+  7,431 choices remain available, not just the first 1,000.
 - The taxon fetcher defaults to the Mongolia country place (`MN`), not the
   country's enclosing rectangle. CoL resolution stays pinned to the published
   2026-07-17 XR dataset (`315834`, DOI `10.48580/dgykv`), with unmatched
