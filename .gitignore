@@ -1,0 +1,17 @@
+qgis/mongolia/optimized_maps/mongolia_google_satellite_*.tif
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.DS_Store
+.qfieldsync/
+DCIM/
+*.qgs~
+*.gpkg-shm
+*.gpkg-wal
+*.aux.xml
+*_attachments.zip
+data/*_backup/
+.*.rescue-*.gpkg
+*.mbtiles
